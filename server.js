@@ -1,7 +1,7 @@
 /*
 Iniciar postgres:
-initdb -U postgres -A password -E utf8 -W -D “C:\BD\DATA”
-pg_ctl -D “C:\BD\DATA” -l “C:\BD\LOG\log.txt” start
+initdb -U postgres -A password -E utf8 -W -D "C:\BD\DATA"
+pg_ctl -D "C:\BD\DATA" -l "C:\BD\LOG\log.txt" start
 psql -U postgres
 
 Para crear, rellenar la base de datos y ejecutar el servidor: 
@@ -22,6 +22,8 @@ const path = require('path');
 
 // require
 const prueba = require('./api/prueba')
+const personas = require('./api/personas')
+
 // -----
 
 const app = express()
@@ -32,6 +34,8 @@ app.use(bodyParser.json());
 
 // use
 app.use('/api/prueba',prueba)
+app.use('/api/personas',personas)
+
 //-----
 
 app.get('/', (req,res) => {
