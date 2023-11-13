@@ -12,6 +12,9 @@ npm run dev
 
 Para borrar base de datos en caso haya error:
 DROP DATABASE proyectopw1;
+
+Detener postgres:
+pg_ctl stop -D "C:\BD\DATA" -m smart
 */
 const express = require('express');
 const bodyParser = require("body-parser")

@@ -1050,7 +1050,7 @@ module.exports = {
         contador: 0
       },
       {
-        titulo: "Honorable",
+        titulo: "Taste of Menace",
         autor: "Win Coultar",
         isbn: "648778172-X",
         editorial: "Dynabox",
@@ -1061,7 +1061,7 @@ module.exports = {
         contador: 0
       },
       {
-        titulo: "Rev",
+        titulo: "City of Arrakis",
         autor: "Osbourn McGrorty",
         isbn: "154693374-3",
         editorial: "Dynabox",
@@ -1072,7 +1072,7 @@ module.exports = {
         contador: 0
       },
       {
-        titulo: "Mrs",
+        titulo: "To Capture a Ring",
         autor: "Cris Pacher",
         isbn: "907143791-4",
         editorial: "Zoomzone",
@@ -1083,7 +1083,7 @@ module.exports = {
         contador: 0
       },
       {
-        titulo: "Dr",
+        titulo: "Something Domestic",
         autor: "Tallulah Lescop",
         isbn: "529496090-7",
         editorial: "Aivee",
@@ -1094,7 +1094,7 @@ module.exports = {
         contador: 0
       },
       {
-        titulo: "Rev",
+        titulo: "The Children of the Plant People",
         autor: "Belle Paprotny",
         isbn: "824544887-7",
         editorial: "Topicblab",
@@ -1105,7 +1105,7 @@ module.exports = {
         contador: 0
       },
       {
-        titulo: "Mrs",
+        titulo: "Death of the Prize Pygmy",
         autor: "Blane Arkwright",
         isbn: "380606346-X",
         editorial: "Viva",
