@@ -40,8 +40,8 @@ module.exports = {
         libro_id: "2"
       },
       {
-        fecha_inicio: new Date("2023-10-15"),
-        fecha_final: new Date("2023-10-25"),
+        fecha_inicio: new Date("2023-11-15"),
+        fecha_final: new Date("2023-12-10"),
         persona_id: "3",
         libro_id: "3"
       }
