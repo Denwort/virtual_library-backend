@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     nro_documento: DataTypes.STRING,
     correo: DataTypes.STRING,
     contrasenha: DataTypes.STRING,
-    foto: DataTypes.STRING,
+    foto: DataTypes.TEXT,
     idioma: DataTypes.STRING,
     prefijo: DataTypes.STRING,
     color: DataTypes.STRING

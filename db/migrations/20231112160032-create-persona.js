@@ -31,7 +31,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       foto: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       idioma: {
         type: Sequelize.STRING

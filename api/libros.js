@@ -10,6 +10,13 @@ ruta.get('/busqueda', async (req, res) => {
     let keyword = obj.keyword != '' ? obj.keyword : ''
     let type = obj.type != '' ? obj.type : ''
     let filters = obj.filters ? obj.filters.split(',') : []
+
+    let page = obj.page != '' ? obj.page : '' // de mi req llamos a despues del "?"
+    let pageSize = 5
+    // Necesito saber desde donde inicia la pagina y donde 
+    let start= (page -1)* pageSize // algoritmo para saber el punto de inicio
+    let end = start + pageSize
+
     if(filters.length === 0) return res.status(200).json([])
 
     console.log(req.query)
@@ -27,10 +34,10 @@ ruta.get('/busqueda', async (req, res) => {
                     [Op.iLike] : filters.includes('autor') ? `%${keyword}%` : '&&&&&&&&&&'
                 },
                 topicos : {
-                    [Op.iLike] : filters.includes('genero') ? `%${keyword}%` : '&&&&&&&&&&&&'
+                    [Op.iLike] : filters.includes('genero') ? `%${keyword}%` : '&&&&&&&.l.&&&&&'
                 },
                 isbn : {
-                    [Op.iLike] : filters.includes('isbn') ? `%${keyword}%` : '&&&&&&&&&&&&&&&&'
+                    [Op.iLike] : filters.includes('isbn') ? `%${keyword}%` : '&&&&&°-°&&&&&&&&&'
                 },
             }
             ,
@@ -46,6 +53,7 @@ ruta.get('/busqueda', async (req, res) => {
         }
     })
 
+    
     // Calcular si el libro esta disponible o no
     let rpta = []
     let hoy = new Date(obtenerFechaActual())
@@ -65,9 +73,24 @@ ruta.get('/busqueda', async (req, res) => {
         rpta.push({ ...item.get({ plain: true }), disponible: disponibilidad })
     })
     
-    
-    return res.status(200).json(rpta)
-    
+    // PARA LA PAGINACION
+    // libros == data
+    const totalItems = rpta.length
+    const totalPages = Math.ceil(totalItems/pageSize)
+    let itemL = rpta
+    let itemsAPaginar = itemL.slice(start,end)
+    // Convertir a JSON
+    itemsAPaginar = JSON.stringify(itemsAPaginar)
+
+    return res.status(200).json( {
+        page,
+        totalPages,
+        pageSize,
+        totalItems,
+        items: JSON.parse(itemsAPaginar)
+        }
+    )
+
 });
 
 function obtenerFechaActual() {
