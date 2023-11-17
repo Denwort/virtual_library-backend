@@ -93,6 +93,48 @@ ruta.get('/busqueda', async (req, res) => {
 
 });
 
+//revisar grab para corroborar
+
+ruta.get('/leer', async (req, res) => {
+    let id = req.query.id
+    let rpta = await db.libro.findByPk( id )
+    res.status(200).json(rpta);
+});
+
+ruta.post('/agregar', async (req, res) => {
+    let obj = req.body
+    console.log(obj)
+    let rpta = await db.libro.create( obj )
+    res.status(200).json(rpta);
+});
+
+ruta.delete('/eliminar', async (req, res) => {
+    let req_id = req.query.id
+    let rpta = await db.libro.destroy( {
+        where: {
+            id : req_id
+        },
+        include : {
+            model : db.reserva,
+            as: 'reservado',
+            where : {
+                fecha_final :  {
+                    [Op.gt]: obtenerFechaActual(),
+                  }
+            },
+            include : {
+                model : db.persona,
+                as : 'reservante',
+                attributes : [nombres]
+            }
+        }
+    } )
+
+    res.status(200).json(rpta);
+});
+
+
+
 function obtenerFechaActual() {
     const hoy = new Date();
     const year = hoy.getFullYear();
