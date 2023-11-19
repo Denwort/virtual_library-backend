@@ -34,7 +34,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       contador: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue : 0
+      },
+      ultimo_reservante: {
+        type: Sequelize.STRING,
+        defaultValue: ''
       },
       createdAt: {
         allowNull: false,

@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     topicos: DataTypes.STRING,
     descripcion: DataTypes.TEXT,
     imagen: DataTypes.STRING,
-    contador: DataTypes.INTEGER
+    contador: DataTypes.INTEGER,
+    ultimo_reservante: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'libro',

@@ -9,15 +9,13 @@ ruta.get('/busqueda', async (req, res) => {
     let obj = req.query
     let keyword = obj.keyword != '' ? obj.keyword : ''
     let type = obj.type != '' ? obj.type : ''
-    let filters = obj.filters ? obj.filters.split(',') : []
+    let filters = obj.filters != '' ? obj.filters.split(',') : []
 
     let page = obj.page != '' ? obj.page : '' // de mi req llamos a despues del "?"
     let pageSize = 5
     // Necesito saber desde donde inicia la pagina y donde 
     let start= (page -1)* pageSize // algoritmo para saber el punto de inicio
     let end = start + pageSize
-
-    if(filters.length === 0) return res.status(200).json([])
 
     console.log(req.query)
     console.log(filters)
