@@ -33,5 +33,12 @@ ruta.post('/registrar', async (req, res) => {
     let rpta = await db.persona.create( obj )
     res.status(200).json(rpta);
 });
-  
+
+ruta.post('/modificar', async (req, res) => {
+    let obj = req.body
+    let persona = await db.persona.findByPk(obj.id)
+    await persona.update({...obj})
+    res.status(200).json(persona)
+})
+
 module.exports = ruta
