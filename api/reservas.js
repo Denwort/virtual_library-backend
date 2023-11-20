@@ -13,5 +13,43 @@ ruta.post('/reservar', async (req, res) => {
     await libro.update({ultimo_reservante : persona.nombres})
     console.log(libro)
 });
+
+ruta.get('/persona', async (req, res) => {
+    let obj = req.query
+    let id = obj.id
+
+    let page = obj.page 
+    let pageSize = 4
+    let start= (page -1)* pageSize 
+    let end = start + pageSize
+
+    let reservas = await db.reserva.findAll({
+        order :[['id', 'DESC']],
+        where : {
+            persona_id : id
+        },
+        include : {
+            model: db.libro,
+            as: 'reservado',
+        }
+    })
+
+    const totalItems = reservas.length
+    const totalPages = Math.ceil(totalItems/pageSize)
+    let itemL = reservas
+    let itemsAPaginar = itemL.slice(start,end)
+
+    itemsAPaginar = JSON.stringify(itemsAPaginar)
+
+    return res.status(200).json( {
+        page,
+        totalPages,
+        pageSize,
+        totalItems,
+        items: JSON.parse(itemsAPaginar)
+        }
+    )
+
+});
   
 module.exports = ruta
