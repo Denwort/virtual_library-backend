@@ -15,6 +15,12 @@ DROP DATABASE proyectopw1;
 
 Detener postgres:
 pg_ctl stop -D "C:\BD\DATA" -m smart
+
+Exportar base de datos:
+pg_dump -U postgres proyectopw1 > proyectopw1.pgsql
+
+Importar base de datos:
+psql -U postgres proyectopw1 < proyectopw1.pgqsl
 */
 const express = require('express');
 const bodyParser = require("body-parser")
