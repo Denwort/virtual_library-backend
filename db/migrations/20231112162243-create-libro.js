@@ -31,7 +31,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       imagen: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       contador: {
         type: Sequelize.INTEGER,

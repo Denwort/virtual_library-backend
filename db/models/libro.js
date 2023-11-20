@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     tipo: DataTypes.STRING,
     topicos: DataTypes.STRING,
     descripcion: DataTypes.TEXT,
-    imagen: DataTypes.STRING,
+    imagen: DataTypes.TEXT,
     contador: DataTypes.INTEGER,
     ultimo_reservante: DataTypes.STRING
   }, {
