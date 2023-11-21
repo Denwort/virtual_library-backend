@@ -95,7 +95,12 @@ ruta.get('/busqueda', async (req, res) => {
 
 ruta.get('/leer', async (req, res) => {
     let id = req.query.id
-    let rpta = await db.libro.findByPk(id)
+    let rpta = await db.libro.findByPk(id, {
+        include : {
+            model: db.reserva,
+            as: 'reservado'
+        }
+    })
     res.status(200).json(rpta);
 });
 
@@ -112,20 +117,6 @@ ruta.delete('/eliminar', async (req, res) => {
         where: {
             id: req_id
         },
-        include: {
-            model: db.reserva,
-            as: 'reservado',
-            where: {
-                fecha_final: {
-                    [Op.gt]: obtenerFechaActual(),
-                }
-            },
-            include: {
-                model: db.persona,
-                as: 'reservante',
-                attributes: [nombres]
-            }
-        }
     })
 
     res.status(200).json(rpta);
@@ -137,7 +128,7 @@ ruta.put('/modificar', async (req, res) => {
     
     const libro = await db.libro.findByPk(id);
     // Actualizar los datos del libro en la base de datos
-    await libro.update(datosModificados);
+    await libro.update({...datosModificados});
     return res.json({ mensaje: 'Libro modificado correctamente' });
 
 });

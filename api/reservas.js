@@ -53,4 +53,18 @@ ruta.get('/persona', async (req, res) => {
 
 });
   
+ruta.get('/leer', async (req, res) => {
+    let id = req.query.id
+    let rpta = await db.reserva.findByPk(id, {
+        include : {
+            model: db.libro,
+            as: 'reservado'
+        }, include: {
+            model: db.persona,
+            as: 'reservante'
+        }
+    })
+    res.status(200).json(rpta);
+});
+
 module.exports = ruta
