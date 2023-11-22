@@ -2,7 +2,6 @@
 Iniciar postgres:
 initdb -U postgres -A password -E utf8 -W -D "C:\BD\DATA"
 pg_ctl -D "C:\BD\DATA" -l "C:\BD\LOG\log.txt" start
-psql -U postgres
 
 Para crear, rellenar la base de datos y ejecutar el servidor: 
 npx sequelize db:create
