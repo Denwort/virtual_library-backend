@@ -133,6 +133,37 @@ ruta.put('/modificar', async (req, res) => {
 
 });
 
+ruta.get('/MasPedidos', async (req, res)=>{
+    let obj = req.query
+    let page = obj.page
+    let pageSize = 2
+    let start= (page -1)* pageSize 
+    let end = start + pageSize
+
+    let libros = await db.libro.findAll({
+        where:{
+            contador:{ [Op.gt]: 0 }
+        },
+        order :[['contador', 'DESC']],
+    })
+
+    const totalItems = libros.length
+    const totalPages = Math.ceil(totalItems/pageSize)
+    let itemL = libros
+    let itemsAPaginar = itemL.slice(start,end)
+    itemsAPaginar = JSON.stringify(itemsAPaginar)
+  
+    return res.status(200).json( {
+          page,
+          totalPages,
+          pageSize,
+          totalItems,
+          items: JSON.parse(itemsAPaginar)
+          }
+    )
+})
+
+
 function obtenerFechaActual() {
     const hoy = new Date();
     const year = hoy.getFullYear();

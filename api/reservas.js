@@ -85,22 +85,10 @@ ruta.get('/ultimas', async(req,res)=>{
         }
     })
 
-    let rpta = []
-    let hoy = new Date(obtenerFechaActual())
-    reservas.forEach(item => {
-        let enFecha = true;
-        if(item.fecha_final < hoy){
-            enFecha = false;
-        }
-        if (enFecha){
-            rpta.push(item)
-        }
-        
-    })
 
-    const totalItems = rpta.length
+    const totalItems = reservas.length
     const totalPages = Math.ceil(totalItems/pageSize)
-    let itemL = rpta
+    let itemL = reservas
     let itemsAPaginar = itemL.slice(start,end)
     itemsAPaginar = JSON.stringify(itemsAPaginar)
   
@@ -160,9 +148,21 @@ ruta.get('/proximos', async(req,res)=>{
           as: 'reservado',
         }
     })
-    const totalItems = reservas.length
+
+    let rpta = []
+    let hoy = new Date(obtenerFechaActual())
+    reservas.forEach(item => {
+        let enFecha = true;
+        if(item.fecha_final < hoy){
+            enFecha = false;
+        }
+        if (enFecha){
+            rpta.push(item)
+        }
+    })
+    const totalItems = rpta.length
     const totalPages = Math.ceil(totalItems/pageSize)
-    let itemL = reservas
+    let itemL = rpta
     let itemsAPaginar = itemL.slice(start,end)
     itemsAPaginar = JSON.stringify(itemsAPaginar)
   
