@@ -62,7 +62,7 @@ ruta.get('/busqueda', async (req, res) => {
             //item.reservado = item.reservado.sort((a, b) => b.id - a.id);
             item.reservado.forEach(i => {
                 console.log(" ", i.id, i.fecha_final)
-                if (i.fecha_final > hoy) {
+                if (new Date(i.fecha_final) > hoy) {
                     disponibilidad = false
                 }
             })
@@ -95,13 +95,33 @@ ruta.get('/busqueda', async (req, res) => {
 
 ruta.get('/leer', async (req, res) => {
     let id = req.query.id
-    let rpta = await db.libro.findByPk(id, {
+    console.log(id)
+    let libro = await db.libro.findByPk(id, {
         include : {
             model: db.reserva,
-            as: 'reservado'
+            as: 'reservado',
+            attributes: ['id', 'fecha_final'],
+            order: [['id', 'DESC']]
         }
     })
+    // Calcular si el libro esta disponible o no
+    let rpta = {}
+    let hoy = new Date(obtenerFechaActual())
+        let disponibilidad = true;
+        if (libro.reservado) {
+            
+            libro.reservado.forEach(i => {
+                console.log(" ", i.id, i.fecha_final)
+                if (new Date(i.fecha_final) > hoy) {
+                    disponibilidad = false
+                }
+            })
+            console.log("   Disponible: ", disponibilidad)
+        }
+        rpta = ({ ...libro.get({ plain: true }), disponible: disponibilidad })
+    
     res.status(200).json(rpta);
+
 });
 
 ruta.post('/agregar', async (req, res) => {
