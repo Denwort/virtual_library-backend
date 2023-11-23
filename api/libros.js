@@ -183,7 +183,6 @@ ruta.get('/MasPedidos', async (req, res)=>{
     )
 })
 
-
 function obtenerFechaActual() {
     const hoy = new Date();
     const year = hoy.getFullYear();
