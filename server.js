@@ -5,6 +5,8 @@ pg_ctl -D "C:\BD\DATA" -l "C:\BD\LOG\log.txt" start
 psql -U postgres
 
 Para crear, rellenar la base de datos y ejecutar el servidor: 
+en caso de no tener sequelize: npm install sequelize-cli -g
+
 npx sequelize db:create
 npx sequelize db:migrate
 npx sequelize-cli db:seed:all
