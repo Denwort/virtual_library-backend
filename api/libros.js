@@ -97,7 +97,6 @@ ruta.get('/busqueda', async (req, res) => {
 
 });
 
-//revisar grab para corroborar
 
 ruta.get('/leer', async (req, res) => {
     let id = req.query.id

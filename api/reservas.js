@@ -18,6 +18,7 @@ ruta.post('/reservar', async (req, res) => {
 ruta.get('/persona', async (req, res) => {
     let obj = req.query
     let id = obj.id
+    console.log(id)
 
     let page = obj.page 
     let pageSize = 4
@@ -33,6 +34,10 @@ ruta.get('/persona', async (req, res) => {
             model: db.libro,
             as: 'reservado',
         }
+    })
+
+    reservas.forEach(p=>{
+        console.log(p.reservado.titulo)
     })
 
     const totalItems = reservas.length
