@@ -8,7 +8,10 @@ ruta.get('/busqueda', async (req, res) => {
     // Obtener parametros de busqueda
     let obj = req.query
     let keyword = obj.keyword != '' ? obj.keyword : ''
-    let type = obj.type != '' ? obj.type : ''
+    let type = obj.type != '' ? obj.type.split(',') : []
+    let types = type.length > 0 ? type.map(t => ({ tipo: { [Op.iLike]: `%${t}%` } })): [{tipo: {[Op.iLike] : '%'}}];
+    console.log("tipos: ", types)
+    
     let filters = obj.filters != '' ? obj.filters.split(',') : []
 
     let page = obj.page != '' ? obj.page : '' // de mi req llamos a despues del "?"
@@ -24,24 +27,27 @@ ruta.get('/busqueda', async (req, res) => {
     let libros = await db.libro.findAll({
         order: [['id', 'ASC']],
         where: {
-            [Op.or]: {
-                titulo: {
-                    [Op.iLike]: filters.includes('titulo') ? `%${keyword}%` : 'sdjafdjhbkfalhblhb'
-                },
-                autor: {
-                    [Op.iLike]: filters.includes('autor') ? `%${keyword}%` : '&&&&&&&&&&'
-                },
-                topicos: {
-                    [Op.iLike]: filters.includes('genero') ? `%${keyword}%` : '&&&&&&&.l.&&&&&'
-                },
-                isbn: {
-                    [Op.iLike]: filters.includes('isbn') ? `%${keyword}%` : '&&&&&°-°&&&&&&&&&'
-                },
-            }
-            ,
-            tipo: {
-                [Op.iLike]: `%${type}%`
-            }
+            [Op.and] : [
+                { [Op.or]: {
+                    titulo: {
+                        [Op.iLike]: filters.includes('titulo') ? `%${keyword}%` : 'sdjafdjhbkfalhblhb'
+                    },
+                    autor: {
+                        [Op.iLike]: filters.includes('autor') ? `%${keyword}%` : '&&&&&&&&&&'
+                    },
+                    topicos: {
+                        [Op.iLike]: filters.includes('genero') ? `%${keyword}%` : '&&&&&&&.l.&&&&&'
+                    },
+                    isbn: {
+                        [Op.iLike]: filters.includes('isbn') ? `%${keyword}%` : '&&&&&°-°&&&&&&&&&'
+                    }
+                }
+                }
+                ,
+                {
+                    [Op.or] : types
+                }
+            ]
         },
         include: {
             model: db.reserva,
