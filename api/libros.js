@@ -133,10 +133,15 @@ ruta.post('/agregar', async (req, res) => {
 
 ruta.delete('/eliminar', async (req, res) => {
     let req_id = req.query.id
+    let eliminarReserva = await db.reserva.destroy({
+        where:{
+            libro_id: req_id
+        }
+    })
     let rpta = await db.libro.destroy({
         where: {
             id: req_id
-        },
+        }
     })
 
     res.status(200).json(rpta);
