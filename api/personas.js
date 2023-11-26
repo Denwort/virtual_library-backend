@@ -34,14 +34,8 @@ ruta.post('/registrar', async (req, res) => {
     res.status(200).json(rpta);
 });
 
-ruta.post('/modificar', async (req, res) => {
-    let obj = req.body
-    let persona = await db.persona.findByPk(obj.id)
-    await persona.update({...obj})
-    res.status(200).json(persona)
-})
 
-ruta.put('/modificar2', async (req, res) => {
+ruta.put('/modificar', async (req, res) => {
     const id = req.query.id;
     const datosModificados = req.body;
     
